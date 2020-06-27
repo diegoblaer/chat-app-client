@@ -1,0 +1,28 @@
+$lightBlue: #0dafe0;
+
+.button {
+	border-radius: 8px;
+	border: 1px solid $lightBlue;
+	background-color: $lightBlue;
+	color: #ffffff;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 12px 45px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
+	cursor: pointer;
+
+	&.tiny {
+		font-size: 10px;
+		padding: 10px 40px;
+	}
+
+	&:active {
+		transform: scale(0.95);
+	}
+
+	&:focus {
+		outline: none;
+	}
+}

@@ -1,0 +1,88 @@
+$lightBlue: #0dafe0;
+
+.login {
+	background: #fff;
+	width: 100%;
+	max-width: 400px;
+	min-height: 500px;
+	padding: 40px;
+	box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
+
+	h1 {
+		text-align: center;
+		font-size: 18px;
+
+		span {
+			color: $lightBlue;
+			font-weight: bold;
+		}
+	}
+}
+
+.login-form {
+	margin: 80px 0 0;
+	padding: 0 40px;
+
+	&__field {
+		margin-bottom: 45px;
+		position: relative;
+
+		label {
+			font-weight: bold;
+			position: absolute;
+			font-size: 10px;
+			bottom: 30px;
+			left: 0;
+			transition: 0.2s;
+		}
+
+		input {
+			border: 0;
+			border-bottom: 1px solid #000;
+			padding-bottom: 5px;
+			width: 100%;
+			outline: none;
+			font-family: inherit;
+			transition: border-color 0.2s;
+			position: relative;
+			z-index: 100;
+			background: transparent;
+
+			&:focus {
+				border-bottom: 2px solid $lightBlue;
+
+				+ label {
+					color: $lightBlue;
+					bottom: 30px !important;
+					font-size: 10px !important;
+				}
+			}
+
+			&::placeholder {
+				color: transparent;
+			}
+
+			&:placeholder-shown + label {
+				font-size: 12px;
+				bottom: 5px;
+				cursor: text;
+			}
+		}
+	}
+
+	&__avatar {
+		margin-bottom: 45px;
+
+		h5 {
+			text-align: center;
+		}
+
+		.avatars {
+			display: flex;
+			margin-top: 10px;
+			flex-wrap: wrap;
+			justify-content: space-evenly;
+		}
+	}
+}

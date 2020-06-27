@@ -1,0 +1,74 @@
+.avatar {
+	margin: 5px;
+	background-size: cover !important;
+	height: 40px;
+	width: 40px;
+	cursor: pointer;
+	border-radius: 50%;
+	background-position: center;
+	background-repeat: no-repeat;
+	transition: 0.2s;
+	position: relative;
+
+	&.small {
+		height: 25px;
+		width: 25px;
+	}
+
+	&.tiny {
+		height: 18px;
+		width: 18px;
+	}
+
+	&.connected::after {
+		content: "";
+		height: 7px;
+		width: 7px;
+		background: #1cff01;
+		position: absolute;
+		bottom: 1px;
+		right: 0px;
+		border-radius: 50%;
+	}
+
+	&.selected {
+		box-shadow: 0px 0px 2px 2px #0000004d;
+		transform: scale(1.2);
+	}
+
+	&.hoverable:hover {
+		transform: scale(1.2);
+	}
+
+	&.cocinero {
+		background: url("/images/cocinero.png");
+	}
+
+	&.azafata {
+		background: url("/images/azafata.png");
+	}
+
+	&.granjero {
+		background: url("/images/granjero.png");
+	}
+
+	&.empleado {
+		background: url("/images/empleado.png");
+	}
+
+	&.astronauta {
+		background: url("/images/astronauta.png");
+	}
+
+	&.fotografo {
+		background: url("/images/fotografo.png");
+	}
+
+	&.marinero {
+		background: url("/images/marinero.png");
+	}
+
+	&.camarero {
+		background: url("/images/camarero.png");
+	}
+}
