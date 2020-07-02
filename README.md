@@ -1,6 +1,6 @@
 ## Demo
 
-You can check the Demo here: https://diegoblaer-chat-app-client.netlify.app/
+You can check [the Demo here](https://diegoblaer-chat-app-client.netlify.app/)
 
 ---
 
