@@ -3,6 +3,8 @@ import "./styles.scss"
 import classnames from "classnames"
 
 export const Avatar = props => {
+
+  
     const classes = classnames('avatar', props.type, {
         'hoverable': props.hoverable,
         'tiny': props.tiny,
@@ -12,6 +14,6 @@ export const Avatar = props => {
     })
 
   return (
-    <div className={ classes }></div>
+    <div className={ classes } onClick={props.onClick} data-type={props.type}></div>
   );
 }

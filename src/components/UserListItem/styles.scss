@@ -1,0 +1,19 @@
+.connected-user {
+	width: 100%;
+	padding: 10px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+
+	&__info {
+		padding-left: 10px;
+		color: #fff;
+		font-size: 10px;
+
+		span {
+			padding-left: 5px;
+			color: #ffffff5e;
+			font-size: 8px;
+		}
+	}
+}

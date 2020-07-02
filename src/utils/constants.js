@@ -1,3 +1,1 @@
-const avatars = ["astronauta", "azafata", "camarero", "cocinero", "empleado", "fotografo", "granjero", "marinero"]
-
-export default { avatars }
+export const AVATARS = ["astronauta", "azafata", "camarero", "cocinero", "empleado", "fotografo", "granjero", "marinero"]

@@ -85,4 +85,19 @@ $lightBlue: #0dafe0;
 			justify-content: space-evenly;
 		}
 	}
+
+	&__submit-container {
+		display: flex;
+		justify-content: center;
+	}
+
+	&__errors {
+		display: flex;
+		flex-direction: column;
+		justify-content: stretch;
+
+		div:first-child {
+			margin-top: 20px;
+		}
+	}
 }

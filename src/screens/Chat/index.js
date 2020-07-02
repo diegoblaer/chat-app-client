@@ -1,106 +1,101 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AppLayout } from "../../layouts";
-import { Button, Avatar } from "../../components";
+import { Button, Avatar, UserListItem, SysMessage, UserMessage } from "../../components";
+import { useHistory } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import io  from 'socket.io-client';
+import qs from 'query-string'
 import "./styles.scss"
 
+const socket = io(process.env.REACT_APP_SERVER_URL)
 
-export const Chat = props => {
-  return (
-    <AppLayout>
-      <div className="chat">
-          <div className="sidebar">
-                <h1>CONNECTED USERS</h1>
-                <ul>
-                    <li className="connected-user">
-                        <Avatar type="granjero" small connected />
-                        <div className="connected-user__info">Diego Blaer<span>(26)</span></div>
-                    </li>
-                    <li className="connected-user">
-                        <Avatar type="azafata" small connected />
-                        <div className="connected-user__info">Gasti Carmona<span>(26)</span></div>
-                    </li>
-                    <li className="connected-user">
-                        <Avatar type="camarero" small connected />
-                        <div className="connected-user__info">Manu Belfi<span>(26)</span></div>
-                    </li>
-                    <li className="connected-user">
-                        <Avatar type="astronauta" small connected />
-                        <div className="connected-user__info">Gino Iannuzzi<span>(26)</span></div>
-                    </li>
-                    <li className="connected-user">
-                        <Avatar type="empleado" small connected />
-                        <div className="connected-user__info">Chino Krawiec<span>(26)</span></div>
-                    </li>
-                    <li className="connected-user">
-                        <Avatar type="fotografo" small connected />
-                        <div className="connected-user__info">Bruno Giannaula<span>(26)</span></div>
-                    </li>
-                </ul>
-          </div>
+export function Chat(props) {
+    const history = useHistory()
+    const lastMessageRef = useRef(null)
+    const user = qs.parse(props.location.search)
+    const [users, setUsers] = useState([])
+    const [newMessage, setNewMessage] = useState(null);
+    const [messages, setMessages] = useState([])
+    const { handleSubmit, register, reset } = useForm();
+    
+    
+    useEffect(() => {
+        lastMessageRef.current.scrollIntoView({ behavior: "smooth" });        
+    }, [messages]);
 
+    useEffect(() => {
+        if(newMessage){
+            setMessages([ ...messages, newMessage]);         
+        }        
+    }, [newMessage]);
 
+    useEffect(() => {          
+        socket.emit('join', user, error =>{
+            if(error){
+                return history.push('/')
+            }            
+        });   
+        socket.on('user-message', payload => {
+            setNewMessage({ sys: false, payload})
+        });
+    
+        socket.on('sys-message', payload => {
+            setNewMessage({ sys: true, payload})
+        });
+    
+        socket.on('users-list-updated', payload => {
+            setUsers(payload.users)
+        });
+                        
+        return () => socket.disconnect();        
+    }, []); 
+    
+    const onSubmitMessage = data => {
+        socket.emit('create-message', data.message)
+        reset()
+    };
 
-          <div className="chat-content">
+    const renderUsersList = () => {
+        return(
+            <ul>
+                {users.map(user => <UserListItem key={user.id} user={user} />)}
+            </ul>
+        )
+    }
 
+    const renderChatMessages = () => {
+        return messages.map((msg, index) => {                
+            return msg.sys?
+            <SysMessage key={index} message={msg.payload} /> :
+            <UserMessage key={index} message={msg.payload} fromOther={msg.payload.author.id !== socket.id} />
+        })        
+    }
 
-                <div className="chat-messages">
+    return (
+        <AppLayout>
+            <div className="chat">
 
-
-                    <div className="message from-other">
-                        <div className="message__author">
-                            <Avatar type="azafata" tiny />
-                            <span>Gasti Carmona</span>
-                        </div>
-                        <div className="message__content">
-                            <p>alguno quiere un budin?</p>
-                            <span>11:54</span>
-                        </div>
-                    </div>
-
-                    <div className="message from-me">
-                        <div className="message__author">
-                            <Avatar type="granjero" tiny />
-                            <span>Diego Blaer</span>
-                        </div>
-                        <div className="message__content">
-                            <p>yo no</p>
-                            <span>11:54</span>
-                        </div>
-                    </div>
-
-                    <div className="message from-sys">
-                        <div>
-                            <Avatar type="fotografo" tiny />
-                            <span>Bruno Giannaula has joined the chat</span>
-                        </div>                        
-                    </div>
-
-                    <div className="message from-other">
-                        <div className="message__author">
-                            <Avatar type="camarero" tiny />
-                            <span>Manu Belfi</span>
-                        </div>
-                        <div className="message__content">
-                            <p>Lo malo que es sarri</p>
-                            <span>11:54</span>
-                        </div>
-                    </div>
-
-
-
+                <div className="sidebar">
+                        <h1>CONNECTED USERS</h1>
+                        { renderUsersList() }
                 </div>
 
+                <div className="chat-content">
 
-                <div className="chat-actions">
-                    <form>
-                        <input type="text" placeholder="Type something..." name="message" autoComplete="off"></input>
-                        <Button text="Send" tiny />
-                    </form>                    
+                    <div className="chat-messages">
+                        { renderChatMessages() }
+                        <div ref={lastMessageRef} />
+                    </div>
+
+                    <div className="chat-actions">
+                        <form onSubmit={handleSubmit(onSubmitMessage)}>
+                            <input type="text" placeholder="Type something..." name="message" autoComplete="off" ref={register({ required: true })}></input>
+                            <Button text="Send" tiny />
+                        </form>                    
+                    </div>
+
                 </div>
-
-
-          </div>
-      </div>
-    </AppLayout>    
-  );
+            </div>
+        </AppLayout>    
+    );
 }

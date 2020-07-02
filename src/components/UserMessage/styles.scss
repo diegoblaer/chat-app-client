@@ -1,0 +1,40 @@
+.message {
+	&.from-other {
+		align-items: flex-start;
+	}
+
+	&.from-me {
+		align-items: flex-end;
+	}
+
+	&__author {
+		display: flex;
+		align-items: center;
+
+		span {
+			font-size: 10px;
+		}
+	}
+
+	&__content {
+		background: #0dafe038;
+		margin-top: 2px;
+		border-radius: 5px;
+		display: flex;
+		flex-direction: column;
+		position: relative;
+
+		p {
+			font-size: 12px;
+			padding: 10px 10px 0;
+			z-index: 100;
+		}
+
+		span {
+			font-size: 7px;
+			margin-top: 5px;
+			align-self: flex-end;
+			margin: 5px;
+		}
+	}
+}
