@@ -14,7 +14,7 @@ export const Sidebar = props => {
                 <li>
                     <Link to="/" className="add-user" target="_blank">
                         <i class="fa fa-plus"></i>
-                        <span>ADD NEW USER</span>
+                        <span>Add new user</span>
                     </Link>
                 </li>
             </ul>
@@ -24,9 +24,6 @@ export const Sidebar = props => {
     return (
         <div className="sidebar">
             <h1>CONNECTED USERS</h1>
-
-            
-
             { renderUsersList() }
         </div>
     );
