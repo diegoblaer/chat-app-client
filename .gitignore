@@ -28,4 +28,4 @@ yarn-error.log*
 # annotations
 annotations.js
 
-config
+/config
